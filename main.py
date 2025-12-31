@@ -9,7 +9,6 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import soundfile as sf
 import numpy as np
 
-# Thêm đường dẫn backend để import các module xử lý
 sys.path.append(os.path.join(os.getcwd(), "backend"))
 import data_tools
 import config_params
