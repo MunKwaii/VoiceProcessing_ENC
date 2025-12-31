@@ -1,17 +1,12 @@
 import config_params
-import matplotlib.pyplot as plt
 import tensorflow as tf
-import tensorflow_io as tfio
 # from tensorflow.keras import Model
 from tensorflow.keras import Sequential
 from tensorflow.keras.layers import InputLayer, Dense, Activation
 # from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Reshape, Conv2DTranspose
 from tensorflow.keras.layers import GRU, BatchNormalization, Dropout
 from tensorflow.keras.losses import Huber
-from tensorflow.keras.optimizers import Adam, RMSprop
 from tensorflow.keras.optimizers.schedules import ExponentialDecay
-from tensorflow.keras.callbacks import EarlyStopping
-from tensorflow.keras.callbacks import ModelCheckpoint
 
 gpus = tf.config.experimental.list_physical_devices('GPU')
 print(gpus)

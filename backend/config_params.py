@@ -1,69 +1,23 @@
-# Settings for preparing the dataset
-# NOISE_CLASS = 'Household_Appliance'
+# --- 1. LỰA CHỌN MÔ HÌNH (BỘ LỌC) ---
+NOISE_CLASS = 'Household_Appliance'
 # NOISE_CLASS = 'TVnRadio'
-NOISE_CLASS = 'Vechicles'
+# NOISE_CLASS = 'Vechicles'
 # NOISE_CLASS = 'Verbal_Human'
-PATH_DIR_NOISE_SOURCE = './Dataset/Source/Train/Noise'
-PATH_DIR_VOICE_SOURCE = './Dataset/Source/Train/Voice'
-PATH_DIR_TRAIN_ROOT = f'./Dataset/Train/{NOISE_CLASS}'
 
-PATH_DIR_NOISE_CLASS = f'{PATH_DIR_NOISE_SOURCE}/{NOISE_CLASS}/'
-PATH_DIR_TRAIN_TIME_SERIES = f'{PATH_DIR_TRAIN_ROOT}/time_serie/'
-PATH_DIR_TRAIN_NOISE_dB = f'{PATH_DIR_TRAIN_ROOT}/scaled_dB/noise/'
-PATH_DIR_TRAIN_VOICE_dB = f'{PATH_DIR_TRAIN_ROOT}/scaled_dB/voice/'
-PATH_DIR_TRAIN_SPLIT_NOISY = f'{PATH_DIR_TRAIN_ROOT}/splitted/noisy/'
-PATH_DIR_TRAIN_SPLIT_VOICE = f'{PATH_DIR_TRAIN_ROOT}/splitted/voice/'
-PATH_DIR_TRAIN_SNR_BASED = f'{PATH_DIR_TRAIN_ROOT}/noise_SNR/'
-PATH_DIR_TRAIN_MIXED_SOUND = f'{PATH_DIR_TRAIN_ROOT}/noisy'
-PATH_DIR_TRAIN_IMAGE_NOISY = f'{PATH_DIR_TRAIN_ROOT}/image_noisy/'
-PATH_DIR_TRAIN_IMAGE_VOICE = f'{PATH_DIR_TRAIN_ROOT}/image_voice/'
-PATH_DIR_TRAIN_DATASET = f'{PATH_DIR_TRAIN_ROOT}/spectrogram'
+# --- 2. THAM SỐ THUẬT TOÁN XỬ LÝ TIẾNG NÓI (DSP) ---
+# Các tham số này bắt buộc phải có để các hàm trong data_tools.py hoạt động
+SAMPLE_RATE = 16000      # Tần số lấy mẫu tín hiệu
+N_FFT = 256              # Độ dài khung thực hiện biến đổi Fourier (STFT)
+HOP_LENGTH_FFT = 128     # Khoảng cách bước nhảy giữa các khung (Overlap 50%)
+SLICE_LENGTH = 16384     # Độ dài đoạn âm thanh AI xử lý mỗi lần (~1 giây)
+TARGET_dBFS = - 30.0      # Mức âm lượng chuẩn hóa trước khi lọc
 
-# Parameters for preprocessing
-SAMPLE_RATE = 16000
-MIN_DURATION = 1.0
-FRAME_SIZE = 18000
-HOP_LENGTH_FRAME = 250
-NB_SAMPLES = 8000
-TARGET_dBFS = -30.0
-# N_FFT = 511
-# HOP_LENGTH_FFT = 313
-N_FFT = 256
-HOP_LENGTH_FFT = 128
-SLICE_LENGTH = 16384
-
-# Settings for training
-PATH_SPECROGRAM_HDF5_FILE = f'./Dataset/Train/{NOISE_CLASS}/spectrogram/amp_db.h5'
-MODEL = "FC"
-# MODEL = "GRU"
+# --- 3. ĐƯỜNG DẪN HỆ THỐNG ---
+MODEL = "FC"             # Kiến trúc mạng Fully Connected
 MODEL_NAME = f'DDAE_{MODEL}_{NOISE_CLASS}'
-PATH_CURVE = f'./Training_results/Curve/{MODEL_NAME}.png'
-# PATH_WEIGHTS = f'./Training_results/Weights/{MODEL_NAME}.h5'
+# Trỏ trực tiếp vào thư mục backend mới của bạn
 PATH_WEIGHTS = f'backend/model_files/{MODEL_NAME}.h5'
-TRAINING_FROM_SCRATCH = True
-OPTIMIZER = "Adam"
-SAVE_PERIOD = 25
-# BATCH_SIZE = 53
-BATCH_SIZE = 150
-EPOCH_NUM = 500
 
-# Settings for inference
-PATH_DIR_TEST_SOURCE = f'./Dataset/Source/Test'
-PATH_DIR_TEST_NOISE_PREDICT = f'{PATH_DIR_TEST_SOURCE}/Noise/{NOISE_CLASS}/'
-PATH_DIR_TEST_VOICE_PREDICT = f'{PATH_DIR_TEST_SOURCE}/Voice/'
-
-PATH_DIR_TEST_ROOT = f'./Dataset/Test/{NOISE_CLASS}/'
-PATH_DIR_TEST_NOISE_dB = PATH_DIR_TEST_ROOT + 'scaled_dB/noise/'
-PATH_DIR_TEST_VOICE_dB = PATH_DIR_TEST_ROOT + 'scaled_dB/voice/'
-
-PATH_DIR_TEST_SNR_BASED = PATH_DIR_TEST_ROOT + 'noise_SNR/'
-PATH_DIR_TEST_SPLIT_NOISY = PATH_DIR_TEST_ROOT + 'splitted/noisy/'
-PATH_DIR_TEST_SPLIT_VOICE = PATH_DIR_TEST_ROOT + 'splitted/voice/'
-PATH_DIR_TEST_NOISY = PATH_DIR_TEST_ROOT + 'Noisy'
-PATH_DIR_TEST_IMAGE_NOISY = PATH_DIR_TEST_ROOT + 'image_noisy/'
-PATH_DIR_TEST_IMAGE_VOICE = PATH_DIR_TEST_ROOT + 'image_voice/'
-
-# PATH_DIR_PREDICT_ROOT = f'./Predictions/{NOISE_CLASS}'
+# --- 4. ĐẦU RA KẾT QUẢ ---
 PATH_DIR_PREDICT_ROOT = './Predictions'
-PATH_DIR_TEST_IMAGE_DENOISE = f'{PATH_DIR_PREDICT_ROOT}/image_denoise/'
 PATH_PREDICT_OUTPUT_NAME = 'denoise.wav'
